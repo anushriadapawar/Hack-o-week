@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Sustainability Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🌍 Campus Sustainability Tracker</h1>
+                <p>Monitor and Predict Campus-Wide Energy & Sustainability Metrics</p>
+            </div>
+            <div class="upload-section">
+                <label for="file-upload" class="upload-btn">📤 Upload CSV</label>
+                <input type="file" id="file-upload" accept=".csv" hidden>
+                <button id="load-default-btn" class="upload-btn secondary">📊 Load Default Data</button>
+            </div>
+        </header>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading data...</p>
+        </div>
+
+        <!-- KPI Cards -->
+        <section class="kpi-section">
+            <h2>Key Performance Indicators</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon">⚡</div>
+                    <h3>Total Energy Usage</h3>
+                    <p class="kpi-value" id="total-energy">0</p>
+                    <span class="kpi-unit">kWh</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">💨</div>
+                    <h3>Carbon Emissions</h3>
+                    <p class="kpi-value" id="total-carbon">0</p>
+                    <span class="kpi-unit">kg CO₂</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">🌱</div>
+                    <h3>Carbon Savings Potential</h3>
+                    <p class="kpi-value" id="carbon-savings">0</p>
+                    <span class="kpi-unit">kg CO₂</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">💧</div>
+                    <h3>Water Consumption</h3>
+                    <p class="kpi-value" id="total-water">0</p>
+                    <span class="kpi-unit">Liters</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">♻️</div>
+                    <h3>Waste Generated</h3>
+                    <p class="kpi-value" id="total-waste">0</p>
+                    <span class="kpi-unit">kg</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">📈</div>
+                    <h3>Average Energy/Day</h3>
+                    <p class="kpi-value" id="avg-energy">0</p>
+                    <span class="kpi-unit">kWh</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <label for="building-filter">Filter by Building:</label>
+            <select id="building-filter">
+                <option value="">All Buildings</option>
+            </select>
+            <button id="apply-filter" class="btn-primary">Apply Filter</button>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <div class="chart-container half-width">
+                <h3>Energy Usage Over Time</h3>
+                <canvas id="energyChart"></canvas>
+            </div>
+            <div class="chart-container half-width">
+                <h3>Carbon Emissions Trend</h3>
+                <canvas id="carbonChart"></canvas>
+            </div>
+        </section>
+
+        <section class="charts-section">
+            <div class="chart-container half-width">
+                <h3>Waste Generation Chart</h3>
+                <canvas id="wasteChart"></canvas>
+            </div>
+            <div class="chart-container half-width">
+                <h3>Water Consumption</h3>
+                <canvas id="waterChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Forecast Section -->
+        <section class="forecast-section">
+            <h2>Predictive Analytics</h2>
+            <div class="prediction-controls">
+                <button id="forecast-btn" class="btn-primary">📊 30-Day Energy Forecast (Linear Regression)</button>
+                <button id="ma-btn" class="btn-primary">📈 Moving Average (7-Day)</button>
+                <button id="exp-smooth-btn" class="btn-primary">🔄 Exponential Smoothing</button>
+            </div>
+            <div class="chart-container full-width" id="forecast-chart-container" style="display:none;">
+                <h3>Energy Consumption Forecast</h3>
+                <canvas id="forecastChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Building Details -->
+        <section class="building-details" id="building-details" style="display:none;">
+            <h2>Building Details</h2>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label>Building Name:</label>
+                    <p id="building-name">-</p>
+                </div>
+                <div class="detail-item">
+                    <label>Total Energy:</label>
+                    <p id="building-energy">-</p>
+                </div>
+                <div class="detail-item">
+                    <label>Total Carbon:</label>
+                    <p id="building-carbon">-</p>
+                </div>
+                <div class="detail-item">
+                    <label>Total Water:</label>
+                    <p id="building-water">-</p>
+                </div>
+                <div class="detail-item">
+                    <label>Total Waste:</label>
+                    <p id="building-waste">-</p>
+                </div>
+                <div class="detail-item">
+                    <label>Avg Daily Energy:</label>
+                    <p id="building-avg-energy">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 Campus Sustainability Tracker | Powered by Flask & Chart.js</p>
+            <p>Server running on http://127.0.0.1:5000</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
