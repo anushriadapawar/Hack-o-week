@@ -1,0 +1,26 @@
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading, .error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-size: 1.5rem;
+}
+
+.error {
+  color: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 2.5rem !important;
+  }
+}
